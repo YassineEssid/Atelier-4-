@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List of books </title>
+       
+    
+</head>
+<body>
+    <h1>List of Books</h1>
+
+     <div class="example-wrapper">
+{% set nbpublished =0 %}
+{% set nbnot =0 %}
+{% if books is empty %}
+ no books found 
+  {% else %}
+            <table>
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+<th>Date de publication</th>
+            <th>Author</th>
+            <th>Published</th>
+                <th>Actions</th>
+        </tr>
+
+        {% for b in books %}
+        {% if b.published == true %}
+        {% set nbpublished = nbpublished +1 %}
+            <tr>
+                <td>{{ b.title }}</td>
+                <td>{{b.category}}</td>
+                <td>{{b.PublicationDate|date("m/d/Y")}}</td>
+                <td>{{b.author.username}}</td>
+                <td>{{b.published}}</td>
+                <td><a href={{path('app_book_update',{'ref':b.ref})}}>edit</a></td>
+                <td><a href={{path('app_book_delete',{'ref':b.ref})}}>delete</a></td>
+            </tr>
+            {% else %}
+            {%set nbnot = nbnot+1 %}
+     {% endif %}
+
+    {% endfor %}
+   </table>
+    {% endif %}
+    Number of published books is :
+    {{ nbpublished}}
+    <br>Number of unpublished books is :
+    {{nbnot}}
+</div>
+
+</body>
+</html>
